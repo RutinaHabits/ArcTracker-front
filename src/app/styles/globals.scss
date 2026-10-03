@@ -13,6 +13,9 @@ body {
   overflow-x: hidden;
   flex-direction: column;
   font-family: var(--font-family-base);
+  font-weight: 500;
+  font-size: rem(16);
+  line-height: 1.25;
   letter-spacing: -0.03em;
   color: var(--color-light);
   background-color: var(--color-dark);
