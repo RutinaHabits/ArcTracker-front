@@ -1,14 +1,10 @@
-import { Input } from "@/shared/ui/Input/Input";
+import styles from "./page.module.scss";
+import { SignInForm } from "@/domains/auth/components/SignInForm/SignInForm";
 
 export default function SignInPage() {
   return (
-    <div>
-      <span>Sign In</span>
-      <Input
-        label="Электронная почта"
-        type="email"
-        placeholder="example@mail.com"
-      ></Input>
+    <div className={styles.container}>
+      <SignInForm></SignInForm>
     </div>
   );
 }

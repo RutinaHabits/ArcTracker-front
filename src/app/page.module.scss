@@ -1,0 +1,48 @@
+@use "@/app/styles/helpers" as *;
+
+.container {
+	width: 100%;
+	max-width: rem(1260);
+	padding: 0 rem(15);
+	margin: 0 auto;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: rem(15) 0;
+}
+
+.auth {
+	display: inline-grid;
+	grid-template-columns: auto auto;
+	// column-gap: rem(20);
+}
+
+.link {
+	&:hover {
+		color: var(--color-blue-20);
+	}
+
+	&Stick {
+		position: relative;
+		padding-right: rem(20);
+
+		&::after {
+			content: "";
+			position: absolute;
+			right: rem(8);
+			top: 50%;
+			transform: translateY(-50%);
+
+			width: 2px;
+			height: rem(14);
+			background-color: var(--color-light);
+		}
+	}
+}

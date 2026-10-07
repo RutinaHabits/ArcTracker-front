@@ -1,0 +1,82 @@
+@use "@/app/styles/helpers/index" as *;
+
+.spinnerWrapper {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: rem(8);
+}
+
+.spinner {
+	width: rem(16);
+	height: rem(16);
+	border: rem(2) solid currentColor;
+	border-radius: 50%;
+	border-top-color: transparent;
+	opacity: 0.8;
+	animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: rem(5);
+
+	cursor: pointer;
+}
+
+.primary {
+	transition: all 0.2s ease;
+	// color: var(--color-blue-30);
+	// background-color: transparent;
+	// border: rem(2) solid var(--color-blue-30);
+
+	color: var(--color-light);
+	background-color: var(--color-blue-10);
+	border: rem(2) solid var(--color-blue);
+
+	&:hover {
+		box-shadow: rgba(0, 83, 249, 0.475) 0px 0px 30px;
+	}
+
+	border-radius: rem(30);
+}
+
+.secondary {
+	transition: all 0.2s ease;
+	color: var(--color-light);
+	background-color: var(--color-black);
+	border: rem(2) solid var(--color-light);
+	// box-shadow: 0px 2px var(--color-light);
+
+	&:hover {
+		box-shadow: rgba(255, 255, 255, 0.312) 0px 0px 30px;
+	}
+
+	border-radius: rem(30);
+}
+
+.danger {
+	transition: all 0.2s ease;
+	color: var(--color-red);
+	background-color: var(--color-dark);
+	border: rem(2) solid var(--color-red);
+
+	&:hover {
+		box-shadow: rgba(249, 0, 0, 0.475) 0px 0px 30px;
+	}
+
+	border-radius: rem(30);
+}
+
+.button:disabled {
+	cursor: default;
+	opacity: 0.7;
+}
