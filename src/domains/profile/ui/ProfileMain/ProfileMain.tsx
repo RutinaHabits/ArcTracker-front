@@ -36,8 +36,8 @@ export default function ProfileMain() {
 
     setError("");
 
-    if (file.size > 4 * 1024 * 1024) {
-      setError("Max size - 4 MB");
+    if (file.size > 2 * 1024 * 1024) {
+      setError("Max size - 2 MB");
       return;
     }
 
