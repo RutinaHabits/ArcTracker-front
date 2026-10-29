@@ -171,7 +171,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="/videos/1.mp4"
+                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/1.mp4?vercel-blob-valid-until=1793306680262&vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfZkZ4dEp2d0V3akNmallveSIsIm93bmVySWQiOiJ0ZWFtX2xjRjFmdVFmM3NUUjVueDNzZ2tzSGtJdSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzkzMzQ5NjQ3OTQ5LCJpYXQiOjE3OTMzMDY0NDUwNDN9.p_EOpyOOP85ae4zeuCxdvZfgMsRwqqiae4UKCv-1o04&vercel-blob-signature=Vy_gw7jt6_AFdFxITasA1ROUh326oQQPdO21AOyw_QQ"
                 controls
                 playsInline
                 loop
@@ -189,7 +189,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="/videos/2.mp4"
+                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/2.mp4?vercel-blob-valid-until=1793306715272&vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfZkZ4dEp2d0V3akNmallveSIsIm93bmVySWQiOiJ0ZWFtX2xjRjFmdVFmM3NUUjVueDNzZ2tzSGtJdSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzkzMzQ5NjQ3OTQ5LCJpYXQiOjE3OTMzMDY0NDUwNDN9.p_EOpyOOP85ae4zeuCxdvZfgMsRwqqiae4UKCv-1o04&vercel-blob-signature=6jaKdile6577_8MzWzsi5cDSuBeMSXjOSw4TBpJPnRU"
                 controls
                 playsInline
                 loop
@@ -207,7 +207,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="/videos/3.mp4"
+                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/3.mp4?vercel-blob-valid-until=1793306726616&vercel-blob-delegation=eyJzdG9yZUlkIjoic3RvcmVfZkZ4dEp2d0V3akNmallveSIsIm93bmVySWQiOiJ0ZWFtX2xjRjFmdVFmM3NUUjVueDNzZ2tzSGtJdSIsInBhdGhuYW1lIjoiKiIsIm9wZXJhdGlvbnMiOlsiZ2V0IiwiaGVhZCJdLCJ2YWxpZFVudGlsIjoxNzkzMzQ5NjQ3OTQ5LCJpYXQiOjE3OTMzMDY0NDUwNDN9.p_EOpyOOP85ae4zeuCxdvZfgMsRwqqiae4UKCv-1o04&vercel-blob-signature=YpTg6Lfb6DJwqBa1xAQTpLQfyrjOxp6wXf1aM_NRc_M"
                 controls
                 playsInline
                 loop
