@@ -1,0 +1,16 @@
+@use "@/app/styles/helpers" as *;
+
+.pageWrapper {
+	padding: rem(20) 0;
+}
+
+.container {
+	width: 100%;
+	max-width: rem(1260);
+	padding: rem(20) rem(15);
+	margin: 0 auto;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+}

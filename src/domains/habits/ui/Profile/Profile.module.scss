@@ -1,0 +1,50 @@
+@use "@/app/styles/helpers" as *;
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: rem(10);
+}
+
+.title {
+	font-size: rem(28);
+	font-weight: 700;
+	color: #ffffff;
+	letter-spacing: -0.03em;
+	margin: 0;
+}
+
+.profileAvatarLink {
+	background: transparent;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	border-radius: 50%;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+	@include square(rem(42));
+
+	&:hover {
+		transform: scale(1.04);
+		box-shadow: 0 0 0 2px rgba(0, 157, 255, 0.782);
+	}
+}
+
+.avatarImg {
+	@include square(100%);
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+.avatarPlaceholder {
+	@include square(100%);
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.15);
+	color: #ffffff;
+	font-size: rem(16);
+	font-weight: 600;
+	@include flex-center;
+}

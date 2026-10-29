@@ -2,8 +2,23 @@ import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
 export const apiClient = axios.create({
   baseURL: BASE_URL,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -40,26 +55,46 @@ apiClient.interceptors.response.use(
       originalRequest &&
       !originalRequest._retry
     ) {
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token}`;
+            return apiClient(originalRequest);
+          })
+          .catch((err) => Promise.reject(err));
+      }
+
       originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        if (!refreshToken) throw new Error("No refresh token");
+        const response = await axios.post(
+          `${BASE_URL}/auth/refresh`,
+          {},
+          { withCredentials: true },
+        );
 
-        const response = await axios.post(`${BASE_URL}/auth/refresh`, {
-          refreshToken,
-        });
-        const newTokens = response.data.data;
+        const newTokens = response.data?.data;
+        const newAccessToken = newTokens?.accessToken;
 
-        localStorage.setItem("accessToken", newTokens.accessToken);
-        localStorage.setItem("refreshToken", newTokens.refreshToken);
+        if (!newAccessToken) {
+          throw new Error("No access token returned from refresh endpoint");
+        }
 
-        originalRequest.headers.Authorization = `Bearer ${newTokens.accessToken}`;
+        localStorage.setItem("accessToken", newAccessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+
+        processQueue(null, newAccessToken);
+
         return apiClient(originalRequest);
       } catch (refreshError) {
+        processQueue(refreshError, null);
+
         if (typeof window !== "undefined") {
           localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
 
           document.cookie =
             "is_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -67,6 +102,8 @@ apiClient.interceptors.response.use(
           window.location.href = "/sign-in";
         }
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 

@@ -10,10 +10,6 @@ export function middleware(request: NextRequest) {
     pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
   const isDashboardPage = pathname.startsWith("/dashboard");
 
-  console.log(
-    `[Middleware] Кликнули по ссылке: ${pathname}. Токен найден: ${!!token}`,
-  );
-
   if (!token && isDashboardPage) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }

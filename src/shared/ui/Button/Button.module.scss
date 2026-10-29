@@ -40,27 +40,29 @@
 
 	color: var(--color-light);
 	background-color: var(--color-blue-10);
-	border: rem(2) solid var(--color-blue);
+	border: rem(1) solid var(--color-blue);
 
 	&:hover {
-		box-shadow: rgba(0, 83, 249, 0.475) 0px 0px 30px;
+		box-shadow: rgba(0, 83, 249, 0.475) 0px 0px 15px;
 	}
 
-	border-radius: rem(30);
+	border-radius: rem(10);
 }
 
 .secondary {
 	transition: all 0.2s ease;
 	color: var(--color-light);
 	background-color: var(--color-black);
-	border: rem(2) solid var(--color-light);
+	border: rem(1) solid var(--color-light);
 	// box-shadow: 0px 2px var(--color-light);
 
 	&:hover {
-		box-shadow: rgba(255, 255, 255, 0.312) 0px 0px 30px;
+		box-shadow: rgba(255, 255, 255, 0.312) 0px 0px 15px;
+		background-color: #f8fafc;
+		color: #334155;
 	}
 
-	border-radius: rem(30);
+	border-radius: rem(10);
 }
 
 .danger {
@@ -70,7 +72,7 @@
 	border: rem(2) solid var(--color-red);
 
 	&:hover {
-		box-shadow: rgba(249, 0, 0, 0.475) 0px 0px 30px;
+		box-shadow: rgba(249, 0, 0, 0.475) 0px 0px 15px;
 	}
 
 	border-radius: rem(30);

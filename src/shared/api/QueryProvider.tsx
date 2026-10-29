@@ -9,8 +9,8 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            refetchOnWindowFocus: false, // Отключаем авто-запросы при переключении вкладок browser
-            retry: false, // Отключаем повторные попытки при ошибках (для авторизации это важно)
+            refetchOnWindowFocus: false,
+            retry: false,
           },
         },
       }),
