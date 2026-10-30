@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useUpdateProfile } from "../../hooks/useUpdateProfile";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { Button } from "@/shared/ui/Button/Button";
@@ -17,7 +17,15 @@ export default function ProfileMain() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
 
+  const [cooldown, setCooldown] = useState(0);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
 
   if (isLoading) {
     return <div className={styles.loading}>Profile Upload...</div>;
@@ -30,6 +38,11 @@ export default function ProfileMain() {
   const avatarUrl = user?.avatar_url || null;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (cooldown > 0) {
+      setError(`Please wait ${cooldown}s before changing avatar again`);
+      return;
+    }
+
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -41,6 +54,9 @@ export default function ProfileMain() {
     }
 
     updateAvatar.mutate(file, {
+      onSuccess: () => {
+        setCooldown(60);
+      },
       onError: (err: any) => {
         setError(err.response?.data?.message || "Avatar upload error");
       },
@@ -99,8 +115,9 @@ export default function ProfileMain() {
       <div className={styles.profileCard}>
         <div className={styles.avatarSection}>
           <div
-            className={styles.avatarWrapper}
+            className={`${styles.avatarWrapper} ${cooldown > 0 ? styles.cooldownActive : ""}`}
             onClick={() => fileInputRef.current?.click()}
+            style={{ cursor: cooldown > 0 ? "default" : "pointer" }}
           >
             {avatarUrl ? (
               <img
@@ -112,7 +129,9 @@ export default function ProfileMain() {
             ) : (
               <div className={styles.avatarPlaceholder}>{firstLetter}</div>
             )}
-            <div className={styles.avatarOverlay}>Change</div>
+            <div className={styles.avatarOverlay}>
+              {cooldown > 0 ? `${cooldown}s` : "Change"}
+            </div>
           </div>
           <input
             type="file"

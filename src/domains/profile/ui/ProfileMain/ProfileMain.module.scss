@@ -286,6 +286,31 @@
 	gap: rem(8);
 }
 
+.cooldownActive {
+	border-color: rgba(239, 68, 68, 0.3) !important;
+	box-shadow: 0 0 rem(12) rgba(239, 68, 68, 0.05) !important;
+	pointer-events: none;
+
+	.avatarOverlay {
+		opacity: 1 !important;
+		background: rgba(11, 11, 15, 0.85);
+		color: #f87171;
+		font-size: rem(14);
+		font-weight: 600;
+	}
+
+	.avatarImage,
+	.avatarPlaceholder {
+		filter: brightness(0.6) grayscale(0.2);
+		transition: filter 0.3s ease;
+	}
+
+	&:hover {
+		border-color: rgba(239, 68, 68, 0.3) !important;
+		box-shadow: none !important;
+	}
+}
+
 .avatarErrorText {
 	color: var(--color-red);
 	font-size: rem(12);
