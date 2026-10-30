@@ -31,7 +31,9 @@ export default function ProfileMain() {
     ? user.nickname.charAt(0).toUpperCase()
     : "?";
 
-  const normalizedBackendUrl = backendUrl.replace(/\/$/, "");
+  const normalizedBackendUrl = backendUrl
+    .replace(/\/$/, "")
+    .replace(/\/api$/, "");
   const avatarUrl = user?.avatar_url
     ? `${normalizedBackendUrl}${user.avatar_url.startsWith("/") ? user.avatar_url : `/${user.avatar_url}`}`
     : null;

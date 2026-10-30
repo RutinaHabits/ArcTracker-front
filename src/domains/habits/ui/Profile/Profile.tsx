@@ -11,8 +11,12 @@ export function Profile() {
     process.env.NEXT_PUBLIC_API_URL ||
     "https://habit-tracker-backend-8vsc.onrender.com";
 
+  const normalizedBackendUrl = backendUrl
+    .replace(/\/$/, "")
+    .replace(/\/api$/, "");
+
   const avatarUrl = userProfile?.avatar_url
-    ? `${backendUrl}${userProfile.avatar_url}`
+    ? `${normalizedBackendUrl}${userProfile.avatar_url.startsWith("/") ? userProfile.avatar_url : `/${userProfile.avatar_url}`}`
     : null;
 
   return (
