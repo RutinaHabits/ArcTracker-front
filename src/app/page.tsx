@@ -171,7 +171,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/1.mp4"
+                src="https://ceausj98cfn3kqf1.public.blob.vercel-storage.com/1.mp4"
                 controls
                 playsInline
                 loop
@@ -189,7 +189,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/2.mp4"
+                src="https://ceausj98cfn3kqf1.public.blob.vercel-storage.com/2.mp4"
                 controls
                 playsInline
                 loop
@@ -207,7 +207,7 @@ export default function Home() {
           <div className={`${styles.videoCard} ${styles.reveal}`}>
             <div className={styles.videoWrapper}>
               <video
-                src="https://ffxtjvwewjcfjyoy.private.blob.vercel-storage.com/3.mp4"
+                src="https://ceausj98cfn3kqf1.public.blob.vercel-storage.com/3.mp4"
                 controls
                 playsInline
                 loop
