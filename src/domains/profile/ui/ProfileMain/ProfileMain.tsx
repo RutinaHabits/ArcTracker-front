@@ -115,6 +115,7 @@ export default function ProfileMain() {
               <img
                 src={avatarUrl}
                 alt={user?.nickname}
+                crossOrigin="anonymous"
                 className={styles.avatarImage}
               />
             ) : (

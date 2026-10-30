@@ -19,6 +19,7 @@ import {
   setLocalSearch,
   setSelectedDate,
 } from "../../model/habitSlice";
+import NativeAdBanner from "@/shared/ui/NativeAdBanner/NativeAdBanner";
 
 export function HabitTracker() {
   const dispatch = useAppDispatch();
@@ -101,6 +102,8 @@ export function HabitTracker() {
 
   return (
     <div className={styles.container}>
+      <NativeAdBanner />
+
       <header className={styles.header}>
         <div className={styles.headerMain}>
           <p className={styles.streakInfo}>

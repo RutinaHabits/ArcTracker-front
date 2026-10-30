@@ -24,7 +24,12 @@ export function Profile() {
       <h1 className={styles.title}>Dashboard</h1>
       <Link href={"/dashboard/profile"} className={styles.profileAvatarLink}>
         {avatarUrl ? (
-          <img src={avatarUrl} alt="Profile" className={styles.avatarImg} />
+          <img
+            src={avatarUrl}
+            alt="Profile"
+            crossOrigin="anonymous"
+            className={styles.avatarImg}
+          />
         ) : (
           <div className={styles.avatarPlaceholder}>
             {userProfile?.nickname?.charAt(0).toUpperCase() || "U"}
