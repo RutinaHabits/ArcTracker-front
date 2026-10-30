@@ -9,6 +9,11 @@ import { useRouter } from "next/navigation";
 
 export default function ProfileMain() {
   const router = useRouter();
+
+  const backendUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://habit-tracker-backend-8vsc.onrender.com";
+
   const { data: user, isLoading } = useUserProfile();
   const { updateInfo, updateAvatar } = useUpdateProfile();
 
@@ -26,8 +31,9 @@ export default function ProfileMain() {
     ? user.nickname.charAt(0).toUpperCase()
     : "?";
 
+  const normalizedBackendUrl = backendUrl.replace(/\/$/, "");
   const avatarUrl = user?.avatar_url
-    ? `http://localhost:4000${user.avatar_url}`
+    ? `${normalizedBackendUrl}${user.avatar_url.startsWith("/") ? user.avatar_url : `/${user.avatar_url}`}`
     : null;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

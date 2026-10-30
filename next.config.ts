@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
 
               "style-src 'self' 'unsafe-inline';",
               "media-src 'self' https://*.blob.vercel-storage.com;",
-              "img-src 'self' data: https://*.blob.vercel-storage.com;",
+              "img-src 'self' data: https://*.blob.vercel-storage.com https://*.onrender.com;",
             ].join(" "),
           },
         ],

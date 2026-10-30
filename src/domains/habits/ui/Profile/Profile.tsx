@@ -7,8 +7,12 @@ import styles from "./Profile.module.scss";
 export function Profile() {
   const { data: userProfile } = useUserProfile();
 
+  const backendUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://habit-tracker-backend-8vsc.onrender.com";
+
   const avatarUrl = userProfile?.avatar_url
-    ? `http://localhost:4000${userProfile.avatar_url}`
+    ? `${backendUrl}${userProfile.avatar_url}`
     : null;
 
   return (

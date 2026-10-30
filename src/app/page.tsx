@@ -176,7 +176,7 @@ export default function Home() {
                 playsInline
                 loop
                 muted
-                preload="none"
+                preload="metadata"
                 poster="images/preview/1.jpg"
               />
             </div>
@@ -194,7 +194,7 @@ export default function Home() {
                 playsInline
                 loop
                 muted
-                preload="none"
+                preload="metadata"
                 poster="images/preview/2.jpg"
               />
             </div>
@@ -212,7 +212,7 @@ export default function Home() {
                 playsInline
                 loop
                 muted
-                preload="none"
+                preload="metadata"
                 poster="images/preview/3.jpg"
               />
             </div>
