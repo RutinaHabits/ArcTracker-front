@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/Button/Button";
 import { Input } from "@/shared/ui/Input/Input";
 import styles from "./SignInForm.module.scss";
 import { useSignInForm } from "../../hooks/useSignInForm";
+import { AdaptiveTurnstile } from "@/shared/ui/AdaptiveTurnstile/AdaptiveTurnstile";
 
 export function SignInForm() {
   const {
@@ -60,17 +61,14 @@ export function SignInForm() {
           error={fieldErrors.password}
         />
 
-        <div className={styles.captchaWrapper}>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-            onSuccess={(token) => {
-              setCaptchaToken(token);
-              setCaptchaError("");
-            }}
-            onExpire={() => setCaptchaToken("")}
-            onError={() => setCaptchaError("Captcha error. Please try again.")}
-          />
-        </div>
+        <AdaptiveTurnstile
+          onSuccess={(token) => {
+            setCaptchaToken(token);
+            setCaptchaError("");
+          }}
+          onExpire={() => setCaptchaToken("")}
+          onError={() => setCaptchaError("Captcha error. Please try again.")}
+        />
 
         <Button
           type="submit"

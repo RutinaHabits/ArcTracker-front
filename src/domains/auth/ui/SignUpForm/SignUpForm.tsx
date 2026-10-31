@@ -9,6 +9,7 @@ import { Input } from "@/shared/ui/Input/Input";
 import styles from "./SignUpForm.module.scss";
 import { useSignUpForm } from "../../hooks/useSignUpForm";
 import { Turnstile } from "@marsidev/react-turnstile";
+import { AdaptiveTurnstile } from "@/shared/ui/AdaptiveTurnstile/AdaptiveTurnstile";
 
 export function SignUpForm() {
   const {
@@ -72,17 +73,14 @@ export function SignUpForm() {
           error={fieldErrors.password}
         />
 
-        <div className={styles.captchaWrapper}>
-          <Turnstile
-            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? ""}
-            onSuccess={(token) => {
-              setCaptchaToken(token);
-              setCaptchaError("");
-            }}
-            onExpire={() => setCaptchaToken("")}
-            onError={() => setCaptchaError("Captcha error. Please try again.")}
-          />
-        </div>
+        <AdaptiveTurnstile
+          onSuccess={(token) => {
+            setCaptchaToken(token);
+            setCaptchaError("");
+          }}
+          onExpire={() => setCaptchaToken("")}
+          onError={() => setCaptchaError("Captcha error. Please try again.")}
+        />
 
         <Button
           type="submit"
