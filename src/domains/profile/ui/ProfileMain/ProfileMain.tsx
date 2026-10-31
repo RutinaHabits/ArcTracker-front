@@ -188,7 +188,7 @@ export default function ProfileComponent() {
             <span className={styles.avatarErrorText}>{error}</span>
           )}
 
-          <p className={styles.hint}>JPG, PNG, WebP up to 4 MB are allowed</p>
+          <p className={styles.hint}>JPG, PNG, WebP up to 2 MB are allowed</p>
         </div>
 
         <div className={styles.infoSection}>
@@ -199,7 +199,31 @@ export default function ProfileComponent() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 disabled={isInfoSaving}
+                className={styles.nicknameInput}
+                placeholder="Enter nickname"
+                autoFocus
               />
+              <div className={styles.formActions}>
+                <button
+                  type="submit"
+                  className={styles.saveButton}
+                  disabled={isInfoSaving}
+                >
+                  {isInfoSaving ? "Saving..." : "Save"}
+                </button>
+                <button
+                  type="button"
+                  className={styles.cancelButton}
+                  onClick={() => {
+                    setIsEditing(false);
+                    setError("");
+                  }}
+                  disabled={isInfoSaving}
+                >
+                  Cancel
+                </button>
+              </div>
+              {error && <span className={styles.errorText}>{error}</span>}
             </form>
           ) : (
             <div className={styles.viewDetails}>

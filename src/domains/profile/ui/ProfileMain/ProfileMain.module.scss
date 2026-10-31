@@ -267,6 +267,66 @@
 	}
 }
 
+.saveButton {
+	background: #3979f1;
+	color: #ffffff;
+	border: 1px solid rgba(57, 121, 241, 0.4);
+	font-size: rem(13);
+	font-weight: 500;
+	cursor: pointer;
+	padding: rem(8) rem(16);
+	border-radius: rem(8);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0 rem(4) rem(12) rgba(57, 121, 241, 0.2);
+
+	&:hover:not(:disabled) {
+		background: #2563eb;
+		border-color: #2563eb;
+		box-shadow: 0 rem(4) rem(16) rgba(57, 121, 241, 0.35);
+		transform: translateY(rem(-1));
+	}
+
+	&:active:not(:disabled) {
+		transform: translateY(0);
+		box-shadow: 0 rem(2) rem(8) rgba(57, 121, 241, 0.2);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		background: rgba(255, 255, 255, 0.05);
+		border-color: rgba(255, 255, 255, 0.03);
+		color: #64748b;
+		box-shadow: none;
+	}
+}
+
+.cancelButton {
+	background: rgba(255, 255, 255, 0.02);
+	color: #64748b;
+	border: 1px solid rgba(255, 255, 255, 0.04);
+	font-size: rem(13);
+	font-weight: 500;
+	cursor: pointer;
+	padding: rem(8) rem(16);
+	border-radius: rem(8);
+	transition: all 0.2s ease;
+
+	&:hover:not(:disabled) {
+		color: #ffffff;
+		background: rgba(255, 255, 255, 0.06);
+		border-color: rgba(255, 255, 255, 0.1);
+	}
+
+	&:active:not(:disabled) {
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		opacity: 0.4;
+	}
+}
+
 .formActions {
 	display: flex;
 	gap: rem(8);
@@ -283,6 +343,10 @@
 	gap: rem(12);
 	width: 100%;
 	margin-bottom: rem(36);
+
+	@include mobile-s {
+		flex-direction: column;
+	}
 }
 
 .statBox {
