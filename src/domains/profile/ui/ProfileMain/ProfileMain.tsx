@@ -107,7 +107,7 @@ export default function ProfileComponent() {
   return (
     <div className={styles.container}>
       <button
-        className={styles.backButton}
+        className={`${styles.backButton} ${styles.desktopOnly}`}
         onClick={() => router.back()}
         aria-label="Go back"
         disabled={isInteractionDisabled}
@@ -126,6 +126,25 @@ export default function ProfileComponent() {
       </button>
 
       <div className={styles.profileCard}>
+        <button
+          className={`${styles.backButton} ${styles.mobileOnly}`}
+          onClick={() => router.back()}
+          aria-label="Go back"
+          disabled={isInteractionDisabled}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+        </button>
+
         <div className={styles.avatarSection}>
           <div
             className={`${styles.avatarWrapper} ${isAvatarUploading ? styles.avatarActiveLoading : ""}`}
@@ -180,42 +199,27 @@ export default function ProfileComponent() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 disabled={isInfoSaving}
-                className={styles.nicknameInput}
-                placeholder="Enter nickname"
-                autoFocus
               />
-              <div className={styles.formActions}>
-                <button
-                  type="submit"
-                  className={styles.saveButton}
-                  disabled={isInfoSaving}
-                >
-                  {isInfoSaving ? "Saving..." : "Save"}
-                </button>
-                <button
-                  type="button"
-                  className={styles.cancelButton}
-                  onClick={() => {
-                    setIsEditing(false);
-                    setError("");
-                  }}
-                  disabled={isInfoSaving}
-                >
-                  Cancel
-                </button>
-              </div>
-              {error && <span className={styles.errorText}>{error}</span>}
             </form>
           ) : (
             <div className={styles.viewDetails}>
-              <h2 className={styles.nicknameDisplay}>
-                {user?.nickname || "No nickname"}
-              </h2>
+              <h2 className={styles.nickname}>{user?.nickname}</h2>
               <button
-                className={styles.editButton}
+                className={styles.editBtn}
                 onClick={() => setIsEditing(true)}
                 disabled={isAvatarUploading}
               >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
                 Edit Profile
               </button>
             </div>

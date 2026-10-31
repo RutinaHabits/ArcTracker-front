@@ -37,7 +37,7 @@ export default function NativeAdBanner() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        margin: "1.5rem 0",
+        margin: "8rem 0 0 0",
         minHeight: "90px",
         width: "100%",
       }}

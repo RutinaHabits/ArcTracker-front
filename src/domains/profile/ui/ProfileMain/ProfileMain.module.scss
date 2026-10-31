@@ -43,9 +43,42 @@
 	&:active {
 		transform: translateX(0) scale(0.95);
 	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
+}
+
+.desktopOnly {
+	display: flex;
+	align-self: flex-start;
+	margin-bottom: rem(16);
+
+	@include mobile {
+		@include visually-hidden;
+	}
+}
+
+.mobileOnly {
+	display: flex;
+	position: absolute;
+	top: rem(16);
+	left: rem(16);
+	z-index: 10;
+
+	svg {
+		width: rem(22);
+		height: rem(22);
+	}
+
+	@include mobile-above {
+		@include visually-hidden;
+	}
 }
 
 .profileCard {
+	position: relative;
 	background-color: var(--color-dark-10, #13131a);
 	border: 1px solid rgba(255, 255, 255, 0.04);
 	border-radius: rem(20);
@@ -60,6 +93,10 @@
 	align-items: center;
 	color: #fff;
 	backdrop-filter: blur(rem(8));
+
+	@include mobile {
+		padding-top: rem(48);
+	}
 }
 
 .avatarSection {
@@ -161,7 +198,7 @@
 	font-size: rem(22);
 	font-weight: 500;
 	letter-spacing: rem(-0.5);
-	margin: 0;
+	margin: 0 0 rem(10) 0;
 }
 
 .editBtn {
@@ -178,6 +215,7 @@
 	align-items: center;
 	gap: rem(6);
 	transition: all 0.2s ease;
+	align-self: flex-start;
 
 	svg {
 		width: rem(13);
@@ -189,6 +227,11 @@
 		color: #fff;
 		background: rgba(255, 255, 255, 0.05);
 		border-color: rgba(255, 255, 255, 0.08);
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
 	}
 }
 
