@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
               "frame-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://bauval.org https://*.bauval.org https://*.highperformanceformat.com https://*.displayvertising.com;",
               "style-src 'self' 'unsafe-inline';",
               "media-src 'self' https://*.blob.vercel-storage.com;",
-              "img-src 'self' data: https://*.blob.vercel-storage.com https://*.onrender.com https://bauval.org https://*.bauval.org https://*.highperformanceformat.com https://*.displayvertising.com https://*.nresystems.com https://*.storageimagedisplay.com;",
+              "img-src 'self' data: blob: https://*.blob.vercel-storage.com https://*.onrender.com https://bauval.org https://*.bauval.org https://*.highperformanceformat.com https://*.displayvertising.com https://*.nresystems.com https://*.storageimagedisplay.com;",
             ].join(" "),
           },
         ],

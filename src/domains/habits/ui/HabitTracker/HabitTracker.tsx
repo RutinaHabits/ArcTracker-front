@@ -102,8 +102,6 @@ export function HabitTracker() {
 
   return (
     <div className={styles.container}>
-      <NativeAdBanner />
-
       <header className={styles.header}>
         <div className={styles.headerMain}>
           <p className={styles.streakInfo}>
@@ -248,6 +246,8 @@ export function HabitTracker() {
           )}
         </section>
       </div>
+
+      <NativeAdBanner />
 
       <CreateTaskModel
         isOpen={isModalOpen}

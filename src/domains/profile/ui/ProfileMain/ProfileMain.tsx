@@ -7,41 +7,50 @@ import { Button } from "@/shared/ui/Button/Button";
 import styles from "./ProfileMain.module.scss";
 import { useRouter } from "next/navigation";
 
-export default function ProfileMain() {
+export default function ProfileComponent() {
   const router = useRouter();
 
   const { data: user, isLoading } = useUserProfile();
-  const { updateInfo, updateAvatar } = useUpdateProfile();
+  const { updateAvatar, updateInfo } = useUpdateProfile();
 
   const [nickname, setNickname] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState("");
-
-  const [cooldown, setCooldown] = useState(0);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const isAvatarUploading = updateAvatar.isPending;
+  const isInfoSaving = updateInfo.isPending;
+  const isInteractionDisabled = isAvatarUploading || isInfoSaving;
+
   useEffect(() => {
-    if (cooldown <= 0) return;
-    const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-    return () => clearTimeout(timer);
-  }, [cooldown]);
+    if (isEditing && user?.nickname) {
+      setNickname(user.nickname);
+    }
+  }, [isEditing, user?.nickname]);
+
+  useEffect(() => {
+    if (!isAvatarUploading && previewUrl) {
+      if (previewUrl.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
+      setPreviewUrl(null);
+    }
+  }, [isAvatarUploading, previewUrl]);
 
   if (isLoading) {
-    return <div className={styles.loading}>Profile Upload...</div>;
+    return <div className={styles.loading}>Profile Loading...</div>;
   }
 
   const firstLetter = user?.nickname
     ? user.nickname.charAt(0).toUpperCase()
     : "?";
 
-  const avatarUrl = user?.avatar_url || null;
+  const currentAvatarDisplay = previewUrl || user?.avatar_url || null;
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (cooldown > 0) {
-      setError(`Please wait ${cooldown}s before changing avatar again`);
-      return;
-    }
+    if (isInteractionDisabled || !user?.id) return;
 
     const file = e.target.files?.[0];
     if (!file) return;
@@ -53,11 +62,10 @@ export default function ProfileMain() {
       return;
     }
 
+    setPreviewUrl(URL.createObjectURL(file));
+
     updateAvatar.mutate(file, {
-      onSuccess: () => {
-        setCooldown(60);
-      },
-      onError: (err: any) => {
+      onError: (err) => {
         setError(err.response?.data?.message || "Avatar upload error");
       },
     });
@@ -72,13 +80,16 @@ export default function ProfileMain() {
       return;
     }
 
+    if (nickname.trim() === user?.nickname) {
+      setIsEditing(false);
+      return;
+    }
+
     updateInfo.mutate(
       { nickname: nickname.trim() },
       {
-        onSuccess: () => {
-          setIsEditing(false);
-        },
-        onError: (err: any) => {
+        onSuccess: () => setIsEditing(false),
+        onError: (err) => {
           setError(err.response?.data?.message || "Update error");
         },
       },
@@ -99,6 +110,7 @@ export default function ProfileMain() {
         className={styles.backButton}
         onClick={() => router.back()}
         aria-label="Go back"
+        disabled={isInteractionDisabled}
       >
         <svg
           viewBox="0 0 24 24"
@@ -112,31 +124,43 @@ export default function ProfileMain() {
           <polyline points="12 19 5 12 12 5" />
         </svg>
       </button>
+
       <div className={styles.profileCard}>
         <div className={styles.avatarSection}>
           <div
-            className={`${styles.avatarWrapper} ${cooldown > 0 ? styles.cooldownActive : ""}`}
-            onClick={() => fileInputRef.current?.click()}
-            style={{ cursor: cooldown > 0 ? "default" : "pointer" }}
+            className={`${styles.avatarWrapper} ${isAvatarUploading ? styles.avatarActiveLoading : ""}`}
+            onClick={() =>
+              !isInteractionDisabled && fileInputRef.current?.click()
+            }
+            style={{
+              cursor: isInteractionDisabled ? "not-allowed" : "pointer",
+            }}
           >
-            {avatarUrl ? (
+            {currentAvatarDisplay ? (
               <img
-                src={avatarUrl}
+                src={currentAvatarDisplay}
                 alt={user?.nickname}
                 crossOrigin="anonymous"
-                className={styles.avatarImage}
+                className={`${styles.avatarImage} ${isAvatarUploading ? styles.imageBlur : ""}`}
               />
             ) : (
               <div className={styles.avatarPlaceholder}>{firstLetter}</div>
             )}
+
             <div className={styles.avatarOverlay}>
-              {cooldown > 0 ? `${cooldown}s` : "Change"}
+              {isAvatarUploading ? (
+                <div className={styles.spinner}></div>
+              ) : (
+                <span className={styles.changeText}>Change</span>
+              )}
             </div>
           </div>
+
           <input
             type="file"
             ref={fileInputRef}
             onChange={handleFileChange}
+            disabled={isInteractionDisabled}
             accept="image/jpeg,image/png,image/webp"
             className={styles.fileInput}
           />
@@ -155,57 +179,47 @@ export default function ProfileMain() {
                 type="text"
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
-                placeholder={user?.nickname}
+                disabled={isInfoSaving}
                 className={styles.nicknameInput}
+                placeholder="Enter nickname"
                 autoFocus
               />
-              {error && <span className={styles.errorText}>{error}</span>}
               <div className={styles.formActions}>
-                <Button
+                <button
+                  type="submit"
+                  className={styles.saveButton}
+                  disabled={isInfoSaving}
+                >
+                  {isInfoSaving ? "Saving..." : "Save"}
+                </button>
+                <button
                   type="button"
-                  variant="secondary"
+                  className={styles.cancelButton}
                   onClick={() => {
-                    setError("");
                     setIsEditing(false);
+                    setError("");
                   }}
+                  disabled={isInfoSaving}
                 >
                   Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  variant="primary"
-                  disabled={updateInfo.isPending}
-                >
-                  {updateInfo.isPending ? "Saving..." : "Save"}
-                </Button>
+                </button>
               </div>
+              {error && <span className={styles.errorText}>{error}</span>}
             </form>
           ) : (
-            <div className={styles.nameBlock}>
-              <h2 className={styles.nickname}>{user?.nickname}</h2>
+            <div className={styles.viewDetails}>
+              <h2 className={styles.nicknameDisplay}>
+                {user?.nickname || "No nickname"}
+              </h2>
               <button
-                className={styles.editBtn}
-                onClick={() => {
-                  setError("");
-                  setNickname(user?.nickname || "");
-                  setIsEditing(true);
-                }}
+                className={styles.editButton}
+                onClick={() => setIsEditing(true)}
+                disabled={isAvatarUploading}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                </svg>
-                Change
+                Edit Profile
               </button>
             </div>
           )}
-          <p className={styles.email}>{user?.email}</p>
         </div>
 
         <div className={styles.statsGrid}>
