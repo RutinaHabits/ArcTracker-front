@@ -247,7 +247,7 @@ export function HabitTracker() {
         </section>
       </div>
 
-      <NativeAdBanner />
+      {/* <NativeAdBanner /> */}
 
       <CreateTaskModel
         isOpen={isModalOpen}
