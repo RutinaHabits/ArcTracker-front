@@ -40,8 +40,7 @@ export function useSignUpForm() {
       return response.data;
     },
     onSuccess: (data) => {
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("accessToken", data.data.accessToken);
       document.cookie = `is_logged_in=true; path=/; max-age=86400`;
       window.location.href = "/dashboard";
     },

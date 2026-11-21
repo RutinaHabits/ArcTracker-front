@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
@@ -10,7 +12,7 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self';",
-              "connect-src 'self' data: https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://*.dnstest.dev https://*.onrender.com https://bauval.org https://*.bauval.org;",
+              `connect-src 'self' data: ${isDev ? "http://localhost:4000" : ""} https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://*.dnstest.dev https://*.onrender.com https://bauval.org https://*.bauval.org;`,
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://bauval.org https://*.bauval.org https://*.highperformanceformat.com https://*.adsttc.com;",
               "frame-src 'self' https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://bauval.org https://*.bauval.org https://*.highperformanceformat.com https://*.displayvertising.com;",
               "style-src 'self' 'unsafe-inline';",

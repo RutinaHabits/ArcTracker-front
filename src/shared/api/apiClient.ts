@@ -3,14 +3,17 @@ import axios from "axios";
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api";
 
 let isRefreshing = false;
-let failedQueue: any[] = [];
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void;
+  reject: (reason?: unknown) => void;
+}> = [];
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: unknown) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
     } else {
-      prom.resolve(token);
+      prom.resolve();
     }
   });
   failedQueue = [];
@@ -59,10 +62,7 @@ apiClient.interceptors.response.use(
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            return apiClient(originalRequest);
-          })
+          .then(() => apiClient(originalRequest))
           .catch((err) => Promise.reject(err));
       }
 
@@ -70,35 +70,21 @@ apiClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const response = await axios.post(
+        await axios.post(
           `${BASE_URL}/auth/refresh`,
           {},
           { withCredentials: true },
         );
 
-        const newTokens = response.data?.data;
-        const newAccessToken = newTokens?.accessToken;
-
-        if (!newAccessToken) {
-          throw new Error("No access token returned from refresh endpoint");
-        }
-
-        localStorage.setItem("accessToken", newAccessToken);
-
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-
-        processQueue(null, newAccessToken);
+        processQueue(null);
 
         return apiClient(originalRequest);
       } catch (refreshError) {
-        processQueue(refreshError, null);
+        processQueue(refreshError);
 
         if (typeof window !== "undefined") {
-          localStorage.removeItem("accessToken");
-
           document.cookie =
             "is_logged_in=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-
           window.location.href = "/sign-in";
         }
         return Promise.reject(refreshError);

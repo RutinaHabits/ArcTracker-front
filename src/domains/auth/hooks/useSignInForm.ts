@@ -36,8 +36,6 @@ export function useSignInForm() {
     },
     onSuccess: (data) => {
       localStorage.setItem("accessToken", data.data.accessToken);
-      localStorage.setItem("refreshToken", data.data.refreshToken);
-
       document.cookie = `is_logged_in=true; path=/; max-age=86400`;
       window.location.href = "/dashboard";
     },
@@ -70,8 +68,8 @@ export function useSignInForm() {
     if (!formData.password) {
       newErrors.password = "A password is required";
       isValid = false;
-    } else if (formData.password.length < 6) {
-      newErrors.password = "The password must be at least 6 characters long.";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "The password must be at least 8 characters long.";
       isValid = false;
     }
 
